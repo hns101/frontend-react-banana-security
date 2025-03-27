@@ -37,7 +37,10 @@ function SignIn() {
             </label>
 
             <button type="button" onClick={() => {
-                setIsAuth(true);
+                setIsAuth((prevState) => ({
+                    ...prevState,  // Keep previous values
+                    isAuth: true,  // Update only `isAuth`
+                }));
                 console.log("Gebruiker is ingelogd!");
                 navigate('/profile');
             }}

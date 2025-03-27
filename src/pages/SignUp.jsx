@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import { Link,useNavigate } from 'react-router-dom';
+import {AuthContext} from "../contexts/AuthContext";
 
 function SignUp() {
+    const {setIsAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -43,7 +46,16 @@ function SignUp() {
                 />
             </label>
 
-            <button type="submit">Registreren</button>
+            <button type="button" onClick={() => {
+                setIsAuth((prevState) => ({
+                    ...prevState,  // Keep previous values
+                    isAuth: true, // Update only `isAuth`
+                    user: username, // adding username
+                    email: email // adding email
+                }));
+                console.log("Gebruiker is ingelogd!");
+                navigate('/profile');
+            }}>Registreren</button>
         </form>
         <p>Heb je al een account? Je kunt je <Link to="/signin">hier</Link> inloggen.</p>
     </>
