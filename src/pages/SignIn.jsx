@@ -1,25 +1,51 @@
-import React,{useContext} from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
 import {AuthContext} from "../contexts/AuthContext";
 
 function SignIn() {
+    const {setIsAuth ,isAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const {toggleAuth,isAuth} = useContext(AuthContext);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const logAuth = () => console.log(isAuth);
 
   return (
     <>
       <h1>Inloggen</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias cum debitis dolor dolore fuga id molestias qui quo unde?</p>
 
-      <form>
-        <p>*invoervelden*</p>
-        <button type="button" onClick={toggleAuth}>Inloggen</button>
-        <button type="button" onClick={logAuth}>log</button>
-      </form>
+        <form>
+            <label>
+                Gebruikersnaam:
+                <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Voer je gebruikersnaam in"
+                />
+            </label>
 
-      <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>
+            <label>
+                Wachtwoord:
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Voer je wachtwoord in"
+                />
+            </label>
+
+            <button type="button" onClick={() => {
+                setIsAuth(true);
+                console.log("Gebruiker is ingelogd!");
+                navigate('/profile');
+            }}
+            >Inloggen
+            </button>
+        </form>
+
+        <p>Heb je nog geen account? <Link to="/signup">Registreer</Link> je dan eerst.</p>
     </>
   );
 }
